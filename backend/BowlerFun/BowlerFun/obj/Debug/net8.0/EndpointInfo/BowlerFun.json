@@ -1,0 +1,184 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BowlerFun",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Bowler": {
+      "get": {
+        "tags": [
+          "Bowler"
+        ],
+        "operationId": "GetBowler",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bowler"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bowler"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bowler"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Bowler": {
+        "required": [
+          "bowlerAddress",
+          "bowlerCity",
+          "bowlerFirstName",
+          "bowlerID",
+          "bowlerLastName",
+          "bowlerMiddleInit",
+          "bowlerTeam",
+          "bowlerZip"
+        ],
+        "type": "object",
+        "properties": {
+          "bowlerID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bowlerLastName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "bowlerFirstName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "bowlerMiddleInit": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "teamID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bowlerTeam": {
+            "$ref": "#/components/schemas/BowlerTeam"
+          },
+          "bowlerAddress": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bowlerCity": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "bowlerZip": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BowlerTeam": {
+        "type": "object",
+        "properties": {
+          "teamID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamName": {
+            "type": "string",
+            "nullable": true
+          },
+          "captainID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
