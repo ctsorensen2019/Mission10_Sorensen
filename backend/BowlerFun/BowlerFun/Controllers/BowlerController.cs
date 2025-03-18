@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
-using BowlerFun.Data;
+using BowlerFun.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +17,26 @@ namespace BowlerFun.Controllers
         }
 
         [HttpGet(Name = "GetBowler")]
-        public IEnumerable<Bowler> Get()
+        public IEnumerable<object> Get()
         {
-            var bowlerList = _bowlerContext.Bowlers.ToList();
+            var bowlerList = _bowlerContext.Bowlers
+                .Include(b => b.Team)
+                .Select(b => new
+                {
+                    b.BowlerId,
+                    b.BowlerLastName,
+                    b.BowlerFirstName,
+                    b.BowlerMiddleInit,
+                    b.BowlerAddress,
+                    b.BowlerCity,
+                    b.BowlerState,
+                    b.BowlerZip,
+                    b.BowlerPhoneNumber,
+                    TeamName = b.Team != null ? b.Team.TeamName : "No Team" // Avoid circular reference
+                })
+                .ToList();
 
-            return (bowlerList);
+            return bowlerList;
         }
     }
 }

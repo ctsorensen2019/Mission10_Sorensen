@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BowlerFun")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e89b7572721fc2e4d0118ac5df5b8d0e1523bd94")]
 [assembly: System.Reflection.AssemblyProductAttribute("BowlerFun")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BowlerFun")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

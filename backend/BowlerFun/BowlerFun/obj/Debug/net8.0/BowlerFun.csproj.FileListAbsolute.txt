@@ -135,3 +135,4 @@ C:\Users\frogg\source\repos\Mission10_Sorensen\backend\BowlerFun\BowlerFun\obj\D
 C:\Users\frogg\source\repos\Mission10_Sorensen\backend\BowlerFun\BowlerFun\obj\Debug\net8.0\BowlerFun.genruntimeconfig.cache
 C:\Users\frogg\source\repos\Mission10_Sorensen\backend\BowlerFun\BowlerFun\obj\Debug\net8.0\ref\BowlerFun.dll
 C:\Users\frogg\source\repos\Mission10_Sorensen\backend\BowlerFun\BowlerFun\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\frogg\source\repos\Mission10_Sorensen\backend\BowlerFun\BowlerFun\obj\Debug\net8.0\BowlerFun.sourcelink.json

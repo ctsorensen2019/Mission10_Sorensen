@@ -1,30 +1,58 @@
-import { useState } from 'react';
-import { bowlers } from './types/bowlers';
-import { teams } from './types/teams';
+import { useState, useEffect } from 'react';
+import { Bowler } from './types'; // Import the types
 
 function BowlerList() {
-  const [bowlers, setBowlers] = useState<bowlers[]>([]);
-  const [teams, setTeams] = useState<teams[]>([]);
+  const [bowlers, setBowlers] = useState<Bowler[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchBowlers = async () => {
-    const response = await fetch('https://localhost:7271/MarriottFood');
-    const data = await response.json();
-    setBowlers(data);
-  };
+  useEffect(() => {
+    const fetchBowlers = async () => {
+      try {
+        const response = await fetch('https://localhost:5000/Bowler');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-  const fetchTeams = async () => {
-    const response = await fetch('https://localhost:7271/MarriottFood');
-    const data = await response.json();
-    setTeams(data);
-  };
+        const rawData = await response.json();
+        console.log('Raw API Data:', rawData); // Debugging
 
-  fetchBowlers();
-  fetchTeams();
+        // Ensure correct extraction of data
+        const data: Bowler[] = rawData.$values || [];
+        console.log('Processed Bowlers:', data); // Debugging
+
+        // ✅ Filter to include ONLY "Marlins" or "Sharks"
+        const filteredBowlers = data.filter(
+          (b) =>
+            b.teamName && (b.teamName === 'Marlins' || b.teamName === 'Sharks')
+        );
+
+        console.log('Filtered Bowlers:', filteredBowlers); // Debugging
+
+        setBowlers(filteredBowlers);
+      } catch (error) {
+        console.error('Error fetching bowlers:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBowlers();
+  }, []);
+
+  if (loading) {
+    return <p>Loading bowlers...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading bowlers: {error}</p>;
+  }
 
   return (
     <>
-      <h1>Bowlers</h1>
-      <table>
+      <h2>Bowlers Table</h2>
+      <table border="1">
         <thead>
           <tr>
             <th>Bowler Name</th>
@@ -37,27 +65,29 @@ function BowlerList() {
           </tr>
         </thead>
         <tbody>
-          {bowlers.map((b) => (
-            <tr key={b.BowlerID}>
-              <td>
-                {b.BowlerFirstName} {b.BowlerMiddleInit} {b.BowlerLastName}
-              </td>
+          {bowlers.length > 0 ? (
+            bowlers.map((b, index) => {
+              console.log(`Rendering row ${index}:`, b); // Debugging
+              return (
+                <tr key={b.bowlerId}>
+                  <td>
+                    {b.bowlerFirstName} {b.bowlerMiddleInit || ''}{' '}
+                    {b.bowlerLastName}
+                  </td>
+                  <td>{b.teamName || 'No Team'}</td>
+                  <td>{b.bowlerAddress}</td>
+                  <td>{b.bowlerCity}</td>
+                  <td>{b.bowlerState}</td>
+                  <td>{b.bowlerZip}</td>
+                  <td>{b.bowlerPhoneNumber}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan={7}>No bowlers available</td>
             </tr>
-          ))}
-          {teams.map((t) => (
-            <tr key={t.TeamID}>
-              <td>{t.TeamName}</td>
-            </tr>
-          ))}
-          {bowlers.map((bo) => (
-            <tr key={bo.BowlerID}>
-              <td>{bo.BowlerAddress}</td>
-              <td>{bo.BowlerCity}</td>
-              <td>{bo.BowlerState}</td>
-              <td>{bo.BowlerZip}</td>
-              <td>{bo.BowlerPhoneNumber}</td>
-            </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </>
